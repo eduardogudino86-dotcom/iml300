@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>through the viewfinder.</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="camera-page">
+
+  <a href="box.html" class="camera-back">← back to the box</a>
+
+  <h1>through the viewfinder.</h1>
+  <p class="camera-intro">it all started with a little curiosity.</p>
+
+  <!-- DIGITAL CAMERA -->
+
+  <div class="camera-container">
+
+    <img src="images/cameradigi.jpg" alt="Blue digital camera">
+
+    <!-- CAMERA SCREEN -->
+
+    <div class="camera-display">
+
+      <p id="cameraNumber">1/3</p>
+
+      <p id="cameraStory">
+        growing up, my family brought point-and-shoot cameras
+        everywhere we went. i remember playing with all the
+        buttons and trying to take pictures of everything.
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- MEMORY BUTTONS -->
+
+  <div class="memory-controls">
+    <button onclick="changeMemory(-1)">←</button>
+    <span>browse memories</span>
+    <button onclick="changeMemory(1)">→</button>
+  </div>
+
+  <p class="camera-bottom">
+    funny how something so small became something i love.
+  </p>
+
+  <a href="nature.html" class="camera-next">
+    the things i started noticing →
+  </a>
+
+  <script>
+
+    let currentMemory = 0;
+
+    let memories = [
+      "growing up, my family brought point-and-shoot cameras everywhere we went. i remember playing with all the buttons and trying to take pictures of everything.",
+
+      "i remember my parents printing out our digital camera photos and putting them into family photo albums. those little pictures became memories we could keep forever.",
+
+      "years later, i spent three years interning with a multimedia business, learning photography and developing my skills. now it's something i'm genuinely passionate about and still do today."
+    ];
+
+    function changeMemory(direction) {
+
+      currentMemory += direction;
+
+      if (currentMemory < 0) {
+        currentMemory = 2;
+      }
+
+      if (currentMemory > 2) {
+        currentMemory = 0;
+      }
+
+      document.getElementById("cameraStory").textContent =
+        memories[currentMemory];
+
+      document.getElementById("cameraNumber").textContent =
+        (currentMemory + 1) + "/3";
+
+    }
+
+  </script>
+
+</body>
+</html>

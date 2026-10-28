@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>movie nights | some things i've kept</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="movies-page">
+
+    <main class="movies-layout">
+
+        <!-- LEFT SIDE: MOVIE TICKET -->
+
+        <section class="ticket-area">
+
+            <div class="movie-ticket"
+                 id="movieTicket"
+                 onclick="flipTicket()"
+                 role="button"
+                 tabindex="0"
+                 aria-label="Flip movie ticket"
+                 onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); flipTicket(); }">
+
+                <!-- FRONT OF TICKET -->
+
+                <div class="ticket-front">
+
+                    <p>ADMIT ONE</p>
+
+                    <h2>movie nights</h2>
+
+                    <p>one ticket / so many memories</p>
+
+                    <p>✦ ✦ ✦</p>
+
+                    <p>click to flip ↗</p>
+
+                </div>
+
+
+                <!-- BACK OF TICKET -->
+
+                <div class="ticket-back">
+
+                    <p>thank you for coming </p>
+
+                    <p>
+                        some of my favorite childhood memories
+                        started with a movie ticket.
+                    </p>
+
+                    <p>
+                        sometimes it's the little traditions
+                        that stay with you the longest.
+                    </p>
+
+                    <a href="box.html"
+                       onclick="event.stopPropagation()">
+                        back to the memory box ↗
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- HIDDEN HOVER MESSAGE -->
+
+            <p class="ticket-hidden">
+                hover around there's always more to remember 
+            </p>
+
+        </section>
+
+
+        <!-- RIGHT SIDE: MEMORY STORY -->
+
+        <section class="movie-story">
+
+            <p class="memory-number">
+                MEMORY NO. 01
+            </p>
+
+            <h1>movie nights.</h1>
+
+            <p>
+                growing up, going to the movies was
+                something i always looked forward to.
+                there was something special about
+                sitting in a theater, watching a story
+                unfold on the big screen.
+            </p>
+
+            <p>
+                i remember the excitement of picking
+                a movie, getting comfortable in my seat,
+                and forgetting about everything else
+                for a little while.
+            </p>
+
+            <p>
+                looking back, these movie tickets remind
+                me of those little moments and how
+                something as simple as watching a movie
+                can become a memory worth keeping.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <nav class="memory-navigation">
+
+        <a href="box.html">
+            ← put this back in the box
+        </a>
+
+    </nav>
+
+
+    <script>
+
+        // Flip the movie ticket when clicked
+
+        function flipTicket() {
+
+            const ticket = document.getElementById("movieTicket");
+
+            ticket.classList.toggle("flipped");
+
+        }
+
+    </script>
+
+</body>
+</html>

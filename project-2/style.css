@@ -3182,3 +3182,207 @@ body.nature-page .nature-memory .nature-sound:hover {
 #cabinSoundButton:hover {
     background: #e7e2d5;
 }
+
+
+/* ==================================
+   NINTENDO MUSIC PLAYER
+   ================================== */
+
+body.nintendo-page .nintendo-music-player {
+    position: fixed;
+    bottom: 25px;
+    right: 30px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 10px 14px;
+
+    background: #f4f0e6;
+    border: 1px solid #aaa;
+
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    color: #444;
+
+    box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* PLAY / PAUSE BUTTON */
+
+body.nintendo-page #nintendoPlayPause {
+    background: #ffffff;
+    color: #444;
+
+    border: 1px solid #aaa;
+    padding: 7px 12px;
+
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* HOVER EFFECT */
+
+body.nintendo-page #nintendoPlayPause:hover {
+    background: #e5e5e5;
+}
+
+
+/* =====================================
+   HAWAII POSTCARD GALLERY
+===================================== */
+
+/* Gallery stays hidden until window is clicked */
+
+.travel-page .hawaii-gallery {
+    display: none;
+    max-width: 850px;
+    margin: 55px auto 30px;
+    text-align: center;
+}
+
+/* Reveal gallery */
+
+.travel-page .hawaii-gallery.gallery-revealed {
+    display: block;
+    animation: travelFade 1s ease-out;
+}
+
+/* Gallery heading */
+
+.travel-page .hawaii-gallery h2 {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    font-weight: normal;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.travel-page .hawaii-gallery > p {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 35px;
+}
+
+/* Arrange photos like postcards */
+
+.travel-page .hawaii-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 10px;
+}
+
+/* Individual postcard photos */
+
+.travel-page .hawaii-photos img {
+    display: block;
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+
+    background: #f8f5ed;
+    border: 9px solid #f8f5ed;
+    border-bottom-width: 25px;
+
+    box-sizing: border-box;
+
+    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.2);
+
+    transition: transform 0.3s ease;
+}
+
+/* Slightly different angles */
+
+.travel-page .hawaii-photos img:nth-child(3n + 1) {
+    transform: rotate(-3deg);
+}
+
+.travel-page .hawaii-photos img:nth-child(3n + 2) {
+    transform: rotate(2deg);
+}
+
+.travel-page .hawaii-photos img:nth-child(3n) {
+    transform: rotate(-1deg);
+}
+
+/* Lift photo on hover */
+
+.travel-page .hawaii-photos img:hover {
+    transform: rotate(0deg) scale(1.06);
+    z-index: 2;
+    position: relative;
+}
+
+/* Fix airplane window background image */
+
+.travel-page .hawaii-view {
+    width: 100%;
+    height: 100%;
+    background-image: url("images/hawaii-view.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+/* Smaller screens */
+
+@media (max-width: 650px) {
+    .travel-page .hawaii-photos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .travel-page .hawaii-photos img {
+        height: 140px;
+    }
+}
+
+@media (max-width: 400px) {
+    .travel-page .hawaii-photos {
+        grid-template-columns: 1fr;
+        max-width: 260px;
+        margin: auto;
+    }
+}
+
+/* FIX HAWAII POSTCARD SIZES */
+
+body.travel-page .hawaii-photos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+    max-width: 850px;
+    margin: 30px auto;
+}
+
+body.travel-page .hawaii-photos img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 170px;
+    object-fit: cover;
+    box-sizing: border-box;
+}
+
+/* HIDE GALLERY UNTIL WINDOW IS CLICKED */
+
+body.travel-page .hawaii-gallery {
+    display: none;
+}
+
+body.travel-page .hawaii-gallery.gallery-revealed {
+    display: block;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+    body.travel-page .hawaii-photos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

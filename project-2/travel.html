@@ -9,6 +9,95 @@
     <title>somewhere new | some things i've kept</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* MAKE SURE THE AIRPLANE WINDOW PHOTO SHOWS */
+
+        .travel-page .window-view {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .travel-page .hawaii-view {
+            display: block;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .travel-page .window-clouds {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* CLICKABLE POSTCARDS */
+
+        .travel-page .hawaii-photos img {
+            cursor: zoom-in;
+        }
+
+        /* ENLARGED POSTCARD POPUP */
+
+        .travel-page .postcard-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 25, 30, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .travel-page #enlargedPostcard {
+            max-width: 85vw;
+            max-height: 80vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+
+            background: #f8f5ed;
+            border: 12px solid #f8f5ed;
+            border-bottom-width: 35px;
+
+            box-sizing: border-box;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+
+            transform: rotate(-2deg);
+            animation: postcardAppear 0.3s ease;
+        }
+
+        .travel-page .postcard-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            font-size: 36px;
+            color: white;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        @keyframes postcardAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.85) rotate(-5deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(-2deg);
+            }
+        }
+    </style>
+
 </head>
 
 <body class="travel-page">
@@ -28,9 +117,7 @@
 
             <p>memory no. 03 / travel</p>
 
-            <h1>somewhere new.</h1>
-
-           
+            <h1>somewhere new</h1>
 
         </header>
 
@@ -42,11 +129,15 @@
              role="button"
              tabindex="0"
              aria-label="Reveal Hawaii travel memory"
-             onkeydown="if(event.key === 'Enter' || event.key === ' ') { revealTravelMemory(); }">
+             onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); revealTravelMemory(); }">
 
             <div class="window-view">
 
-                <div class="hawaii-view"></div>
+                <!-- ACTUAL AIRPLANE WINDOW PHOTO -->
+
+                <img class="hawaii-view"
+                     src="images/hawaii-test.jpg"
+                     alt="View from the airplane window">
 
                 <div class="window-clouds"></div>
 
@@ -56,7 +147,7 @@
 
 
         <p class="window-instruction" id="windowInstruction">
-            click on the airplane window to uncover a memory 
+            click on the airplane window to uncover a memory
         </p>
 
 
@@ -64,32 +155,43 @@
 
         <section class="travel-memory" id="travelMemory">
 
-            <p>dear younger me,</p>
+         
 
-            <h2>my first time in hawaii.</h2>
+            <h2>my first time in hawaii!!</h2>
 
             <p>
-                i still remember the excitement of getting
-                on a plane and traveling somewhere completely
-                new. looking out the window and seeing the
-                clouds below me made everything feel
-                a little unreal.
+                this plane ticket represents so much more than
+        just a trip. it represents new adventures and
+        lifelong memories. it was my first time ever
+        getting on a plane, and i still remember how
+        exciting it felt to be traveling somewhere
+        completely new, especially to a place i had
+        always dreamed of visiting.
             </p>
 
             <p>
-                visiting hawaii was such a memorable
-                experience. from the beautiful scenery
-                to the little moments along the way,
-                it reminded me how much there is
-                to explore beyond the places i know.
+                what made this trip even more meaningful was
+        getting to visit family in hawaii while
+        exploring o‘ahu. from trying new foods and activities to
+        learning more about the history and culture,
+        everything felt like a new experience.
+        i remember being so excited to explore, try new foods,
+        take pictures, and make the most of
+        every moment.
             </p>
 
+            
             <p>
-                looking back at these photographs
-                always takes me right back.
+                looking back, this ticket reminds me of
+        how much there is to experience beyond
+        the places i've always known. it represents
+        the excitement of doing something for the
+        first time, the memories made along the way,
+        and my love for traveling
+        and discovering new places.
             </p>
 
-            <p>love, me ♡</p>
+        
 
         </section>
 
@@ -105,22 +207,28 @@
             <div class="hawaii-photos">
 
                 <img src="images/hawaii1.jpg"
-                     alt="Hawaii memory 1">
+                     alt="Hawaii memory 1"
+                     onclick="openPostcard(this)">
 
                 <img src="images/hawaii2.jpg"
-                     alt="Hawaii memory 2">
+                     alt="Hawaii memory 2"
+                     onclick="openPostcard(this)">
 
                 <img src="images/hawaii3.jpg"
-                     alt="Hawaii memory 3">
+                     alt="Hawaii memory 3"
+                     onclick="openPostcard(this)">
 
                 <img src="images/hawaii4.jpg"
-                     alt="Hawaii memory 4">
+                     alt="Hawaii memory 4"
+                     onclick="openPostcard(this)">
 
                 <img src="images/hawaii5.jpg"
-                     alt="Hawaii memory 5">
+                     alt="Hawaii memory 5"
+                     onclick="openPostcard(this)">
 
                 <img src="images/hawaii6.jpg"
-                     alt="Hawaii memory 6">
+                     alt="Hawaii memory 6"
+                     onclick="openPostcard(this)">
 
             </div>
 
@@ -128,13 +236,56 @@
 
 
         <p class="travel-bottom">
-            there's still so much of the world i want to see...
+            there's still so much of the world i want to see
         </p>
 
     </main>
 
 
+    <!-- ENLARGED HAWAII POSTCARD -->
+
+    <div class="postcard-overlay"
+         id="postcardOverlay"
+         onclick="closePostcard()"
+         role="dialog"
+         aria-modal="true"
+         aria-label="Enlarged Hawaii photograph">
+
+        <button class="postcard-close"
+                onclick="closePostcard()"
+                aria-label="Close photograph">
+            ×
+        </button>
+
+        <img id="enlargedPostcard"
+             src=""
+             alt="Enlarged Hawaii postcard"
+             onclick="event.stopPropagation()">
+
+    </div>
+
+
+    <!-- AIRPLANE CABIN SOUND BUTTON -->
+
+    <div class="cabin-audio">
+
+        <button id="cabinSoundButton"
+                onclick="toggleCabinSound()">
+            ♪ play cabin ambience
+        </button>
+
+        <audio id="cabinSound"
+               src="sounds/airplane-cabin.mp3"
+               loop></audio>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
     <script>
+
+        // REVEAL THE TRAVEL MEMORY
 
         function revealTravelMemory() {
 
@@ -151,38 +302,78 @@
 
         }
 
+
+        // OPEN A POSTCARD
+
+        function openPostcard(photo) {
+
+            const enlargedPhoto =
+                document.getElementById("enlargedPostcard");
+
+            const overlay =
+                document.getElementById("postcardOverlay");
+
+            enlargedPhoto.src = photo.src;
+            enlargedPhoto.alt = photo.alt;
+
+            overlay.style.display = "flex";
+
+        }
+
+
+        // CLOSE A POSTCARD
+
+        function closePostcard() {
+
+            document.getElementById("postcardOverlay")
+                .style.display = "none";
+
+        }
+
+
+        // CLOSE WITH ESCAPE KEY
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+                closePostcard();
+            }
+
+        });
+
+
+        // PLAY OR PAUSE CABIN SOUND
+
+        function toggleCabinSound() {
+
+            const audio = document.getElementById("cabinSound");
+            const button = document.getElementById("cabinSoundButton");
+
+            if (audio.paused) {
+
+                audio.volume = 0.35;
+
+                audio.play().then(function() {
+
+                    button.textContent = "❚❚ pause ambience";
+
+                }).catch(function() {
+
+                    button.textContent = "sound unavailable";
+
+                });
+
+            } else {
+
+                audio.pause();
+
+                button.textContent = "♪ play cabin ambience";
+
+            }
+
+        }
+
     </script>
 
-<!-- AIRPLANE CABIN SOUND BUTTON -->
-
-<div class="cabin-audio">
-    <button id="cabinSoundButton" onclick="toggleCabinSound()">
-        ♪ play cabin ambience
-    </button>
-
-    <audio id="cabinSound" src="sounds/airplane-cabin.mp3" loop></audio>
-</div>
-
-<script>
-function toggleCabinSound() {
-    const audio = document.getElementById("cabinSound");
-    const button = document.getElementById("cabinSoundButton");
-
-    if (audio.paused) {
-        audio.volume = 0.35;
-
-        audio.play().then(function() {
-            button.textContent = "❚❚ pause ambience";
-        }).catch(function() {
-            button.textContent = "sound unavailable";
-        });
-    } else {
-        audio.pause();
-        button.textContent = "♪ play cabin ambience";
-    }
-}
-</script>
-
-    
 </body>
 </html>

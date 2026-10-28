@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>press start.</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nintendo-page">
+
+    <a href="box.html" class="game-back">
+        ← back to the box
+    </a>
+
+
+    <!-- SCREEN 1: PRESS START -->
+
+    <div class="game-menu" id="gameMenu">
+
+        <h1>PRESS<br>START</h1>
+
+        <p class="game-subtitle">
+            a childhood saved in games
+        </p>
+
+        <button type="button" onclick="startGame()">
+            START
+        </button>
+
+        <p class="game-bottom">
+            © childhood memories
+        </p>
+
+    </div>
+
+
+    <!-- SCREEN 2: CHOOSE CONSOLE -->
+
+    <div class="console-select"
+         id="consoleSelect"
+         style="display: none;">
+
+        <h2>SELECT CONSOLE</h2>
+
+        <p>choose a memory to explore</p>
+
+        <div class="console-options">
+
+            <!-- NINTENDO DSi -->
+
+            <div class="console-choice"
+                 onclick="showConsole('ds', this)"
+                 role="button"
+                 tabindex="0"
+                 onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); showConsole('ds', this); }">
+
+                <img src="images/ds.png"
+                     alt="Nintendo DSi">
+
+                <h3>NINTENDO DSi</h3>
+
+                <p>PLAYER 1</p>
+
+            </div>
+
+
+            <!-- NINTENDO Wii -->
+
+            <div class="console-choice"
+                 onclick="showConsole('wii', this)"
+                 role="button"
+                 tabindex="0"
+                 onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); showConsole('wii', this); }">
+
+                <img src="images/Wii.jpg"
+                     alt="Nintendo Wii">
+
+                <h3>NINTENDO Wii</h3>
+
+                <p>PLAYER 2</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SCREEN 3: CHILDHOOD MEMORY -->
+
+    <div class="game-memory"
+         id="gameMemory"
+         style="display: none;">
+
+        <h2 id="memoryTitle"></h2>
+
+        <p class="memory-label">
+            MEMORY UNLOCKED ★
+        </p>
+
+        <p id="memoryText"></p>
+
+        <button type="button" onclick="goBack()">
+            ← BACK TO CONSOLES
+        </button>
+
+    </div>
+
+
+    <!-- NINTENDO MUSIC PLAYER -->
+    <!-- Hidden until an individual memory opens -->
+
+    <div class="nintendo-music-player"
+         id="nintendoMusicPlayer"
+         style="display: none;">
+
+        <span id="nintendoTrackName">
+            ♪ select a console
+        </span>
+
+        <button type="button"
+                id="nintendoPlayPause"
+                onclick="toggleNintendoMusic()">
+            ▶ play
+        </button>
+
+    </div>
+
+    <audio id="nintendoMusic" loop></audio>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // MUSIC PLAYER
+
+        const nintendoMusic = document.getElementById("nintendoMusic");
+        const nintendoTrackName = document.getElementById("nintendoTrackName");
+        const nintendoPlayPause = document.getElementById("nintendoPlayPause");
+        const nintendoMusicPlayer = document.getElementById("nintendoMusicPlayer");
+
+        const tracks = {
+            wii: "sounds/wii.mp3",
+            ds: "sounds/ds.mp3"
+        };
+
+
+        // PLAY SELECTED CONSOLE MUSIC
+
+        function playNintendoMusic(consoleName) {
+
+            if (!tracks[consoleName]) return;
+
+            nintendoMusic.pause();
+            nintendoMusic.src = tracks[consoleName];
+            nintendoMusic.load();
+            nintendoMusic.volume = 0.4;
+
+            nintendoTrackName.textContent =
+                consoleName === "wii"
+                ? "♪ wii music"
+                : "♪ nintendo ds music";
+
+            nintendoPlayPause.textContent = "▶ play";
+
+            nintendoMusic.play().then(function() {
+
+                nintendoPlayPause.textContent = "❚❚ pause";
+
+            }).catch(function(error) {
+
+                console.error("Audio playback error:", error);
+
+                nintendoPlayPause.textContent = "sound unavailable";
+
+            });
+
+        }
+
+
+        // PAUSE OR RESUME MUSIC
+
+        function toggleNintendoMusic() {
+
+            if (!nintendoMusic.getAttribute("src")) return;
+
+            if (nintendoMusic.paused) {
+
+                nintendoMusic.play().then(function() {
+
+                    nintendoPlayPause.textContent = "❚❚ pause";
+
+                }).catch(function(error) {
+
+                    console.error("Audio playback error:", error);
+
+                    nintendoPlayPause.textContent = "sound unavailable";
+
+                });
+
+            } else {
+
+                nintendoMusic.pause();
+
+                nintendoPlayPause.textContent = "▶ play";
+
+            }
+
+        }
+
+
+        // SCREEN 1: START GAME
+
+        function startGame() {
+
+            document.getElementById("gameMenu")
+                .style.display = "none";
+
+            document.getElementById("consoleSelect")
+                .style.display = "block";
+
+            document.getElementById("gameMemory")
+                .style.display = "none";
+
+            nintendoMusicPlayer.style.display = "none";
+
+        }
+
+
+        // SCREEN 2: CHOOSE CONSOLE
+
+        function showConsole(consoleName, element) {
+
+            // Prevent clicking twice during animation
+            if (element.classList.contains("console-zoom")) {
+                return;
+            }
+
+            // Play the selected console's music
+            playNintendoMusic(consoleName);
+
+            // Zoom into selected console
+            element.classList.add("console-zoom");
+
+            setTimeout(function() {
+
+                document.getElementById("consoleSelect")
+                    .style.display = "none";
+
+                document.getElementById("gameMemory")
+                    .style.display = "block";
+
+                // Show the music player only on the memory screen
+                nintendoMusicPlayer.style.display = "flex";
+
+
+                // NINTENDO DSi MEMORY
+
+                if (consoleName === "ds") {
+
+                    document.getElementById("memoryTitle")
+                        .textContent = "NINTENDO DSi";
+
+                    document.getElementById("memoryText")
+                        .textContent =
+                        "i remember getting my nintendo dsi for christmas when i was five. it was the first video game console i ever owned, and i was so excited. i played it everywhere, in the car, after school, and even late at night when i was supposed to be sleeping. i'd wait until my parents went to bed so i could sneak in a little more playing time. it's one of those things that instantly reminds me of being a kid.";
+
+                }
+
+                // NINTENDO Wii MEMORY
+
+                else {
+
+                    document.getElementById("memoryTitle")
+                        .textContent = "NINTENDO Wii";
+
+                    document.getElementById("memoryText")
+                        .textContent =
+                        "the wii reminds me of spending hours in the living room with my older sister. we'd play just dance, mario kart, and especially wii sports whenever we got the chance. on rainy days, we'd spend what felt like the entire afternoon playing together. it wasn't really about winning. it was just about having fun together, and those are some of my favorite childhood memories.";
+
+                }
+
+            }, 700);
+
+        }
+
+
+        // SCREEN 3: BACK TO CONSOLES
+
+        function goBack() {
+
+            document.getElementById("gameMemory")
+                .style.display = "none";
+
+            document.getElementById("consoleSelect")
+                .style.display = "block";
+
+            // Hide music player on selection screen
+            nintendoMusicPlayer.style.display = "none";
+
+            // Stop music when returning to console selection
+            nintendoMusic.pause();
+            nintendoMusic.currentTime = 0;
+            nintendoPlayPause.textContent = "▶ play";
+
+            // Reset zoom animation
+            document.querySelectorAll(".console-choice")
+                .forEach(function(item) {
+
+                    item.classList.remove("console-zoom");
+
+                });
+
+        }
+
+    </script>
+
+</body>
+</html>

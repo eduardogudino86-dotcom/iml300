@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>somewhere outside.</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nature-page">
+
+    <!-- BACK TO MEMORY BOX -->
+
+    <a href="box.html" class="nature-back">
+        ← back to the box
+    </a>
+
+
+    <!-- NATURE SCRAPBOOK -->
+
+    <main class="nature-journal">
+
+        <header class="journal-heading">
+
+            <p>06 / little things i've kept</p>
+
+            <h1>somewhere outside</h1>
+
+            <p>some places just stick with you</p>
+
+        </header>
+
+
+        <!-- POLAROID PHOTOGRAPHS -->
+
+        <section class="journal-photos">
+
+            <!-- BIG BEAR -->
+
+            <div class="journal-photo photo-one"
+                 onclick="openMemory('bigbear')"
+                 tabindex="0"
+                 role="button"
+                 onkeydown="if(event.key === 'Enter') openMemory('bigbear')">
+
+                <img src="images/bigbear.jpg" alt="Big Bear">
+
+                <span>big bear</span>
+
+            </div>
+
+
+            <!-- CATALINA ISLAND -->
+
+            <div class="journal-photo photo-two"
+                 onclick="openMemory('catalina')"
+                 tabindex="0"
+                 role="button"
+                 onkeydown="if(event.key === 'Enter') openMemory('catalina')">
+
+                <img src="images/catalina.jpg" alt="Catalina Island">
+
+                <span>catalina island</span>
+
+            </div>
+
+
+            <!-- HIKING -->
+
+            <div class="journal-photo photo-three"
+                 onclick="openMemory('hiking')"
+                 tabindex="0"
+                 role="button"
+                 onkeydown="if(event.key === 'Enter') openMemory('hiking')">
+
+                <img src="images/hiking.jpg" alt="Hiking trail">
+
+                <span>somewhere on a trail</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- LITTLE NOTES -->
+
+        <p class="journal-bottom">
+            click on a photo to read a little more
+        </p>
+
+        
+
+    </main>
+
+
+    <!-- MEMORY POPUP -->
+
+    <div class="memory-overlay"
+         id="memoryOverlay"
+         onclick="closeMemory()">
+
+        <div class="nature-memory"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="natureMemoryTitle"
+             onclick="event.stopPropagation()">
+
+            <!-- CLOSE BUTTON -->
+
+            <button class="memory-close"
+                    onclick="closeMemory()"
+                    aria-label="Close memory">
+                ×
+            </button>
+
+
+            <!-- ENLARGED PHOTO -->
+
+            <img id="natureMemoryImage"
+                 class="enlarged-photo"
+                 src=""
+                 alt="">
+
+
+            <!-- MEMORY TEXT -->
+
+            <p class="memory-date">
+                a little memory...
+            </p>
+
+            <h2 id="natureMemoryTitle"></h2>
+
+            <p id="natureMemoryText"></p>
+
+
+            <!-- SOUND BUTTON -->
+
+            <div class="nature-sound-area">
+
+                <button class="nature-sound"
+                        id="natureSoundButton"
+                        onclick="toggleNatureSound()">
+                    ♪ play sound
+                </button>
+
+            </div>
+
+            <audio id="natureAudio" preload="none"></audio>
+
+        </div>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // MY NATURE MEMORIES
+        // Replace the example descriptions with your original writing.
+        // Sound filenames can be changed to match your recordings.
+
+        const natureMemories = {
+
+            bigbear: {
+                title: "big bear",
+
+                image: "images/bigbear.jpg",
+
+                sound: "sounds/bigbear.mp3",
+
+                text: "i've always liked getting away from the city every once in a while. being surrounded by trees and mountains feels so different from everything back home. it's nice to just be somewhere quieter for a change."
+            },
+
+            catalina: {
+                title: "catalina island",
+
+                image: "images/catalina.jpg",
+
+                sound: "sounds/catalina.mp3",
+
+                text: "i remember visiting catalina and spending time near the ocean. i love being able to explore new places, take photographs, and just enjoy being somewhere different for a little while."
+            },
+
+            hiking: {
+                title: "little adventures",
+
+                image: "images/hiking.jpg",
+
+                sound: "sounds/hiking.mp3",
+
+                text: "hiking is one of those things i always enjoy. i like discovering new trails, taking photos along the way, and seeing places i wouldn't normally get to see."
+            }
+
+        };
+
+
+        // OPEN A MEMORY
+
+        function openMemory(place) {
+
+            const memory = natureMemories[place];
+
+            if (!memory) return;
+
+            const audio = document.getElementById("natureAudio");
+
+            audio.pause();
+            audio.currentTime = 0;
+            audio.src = memory.sound;
+
+            document.getElementById("natureMemoryImage").src = memory.image;
+
+            document.getElementById("natureMemoryImage").alt = memory.title;
+
+            document.getElementById("natureMemoryTitle").textContent = memory.title;
+
+            document.getElementById("natureMemoryText").textContent = memory.text;
+
+            document.getElementById("natureSoundButton").textContent = "♪ play sound";
+
+            document.getElementById("memoryOverlay").classList.add("overlay-open");
+
+        }
+
+
+        // CLOSE A MEMORY
+
+        function closeMemory() {
+
+            const audio = document.getElementById("natureAudio");
+
+            audio.pause();
+            audio.currentTime = 0;
+
+            document.getElementById("memoryOverlay").classList.remove("overlay-open");
+
+            document.getElementById("natureSoundButton").textContent = "♪ play sound";
+
+        }
+
+
+        // PLAY OR PAUSE SOUND
+
+        function toggleNatureSound() {
+
+            const audio = document.getElementById("natureAudio");
+
+            const button = document.getElementById("natureSoundButton");
+
+            if (audio.paused) {
+
+                audio.play().then(function() {
+
+                    button.textContent = "❚❚ pause sound";
+
+                }).catch(function() {
+
+                    button.textContent = "sound unavailable";
+
+                });
+
+            } else {
+
+                audio.pause();
+
+                button.textContent = "♪ play sound";
+
+            }
+
+        }
+
+
+        // RESET BUTTON WHEN SOUND FINISHES
+
+        document.getElementById("natureAudio").addEventListener("ended", function() {
+
+            document.getElementById("natureSoundButton").textContent = "♪ play sound";
+
+        });
+
+
+        // ESCAPE KEY CLOSES POPUP
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+                closeMemory();
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
